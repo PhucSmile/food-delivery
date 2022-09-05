@@ -46,3 +46,30 @@
         }
     }
 }
+
+// PAGINATE
+.paginate-btns {
+    width: 80%;
+    height: 40px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 0.5rem;
+    list-style: none;
+    margin-top: 30px;
+
+    li {
+        a {
+            background-color: var(--active);
+            padding: 5px 13px;
+            color: var(--white) !important;
+            border-radius: 5px;
+            margin: 5px;
+
+            &:hover {
+                background-color: var(--hover-active);
+            }
+        }
+    }
+}

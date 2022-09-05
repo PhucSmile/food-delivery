@@ -13,10 +13,39 @@ import Form from 'react-bootstrap/Form';
 import products from '../../assets/fake-data/products';
 import ProductCard from '../../component/UI/productCard/ProductCard';
 import { useRef } from 'react';
+import useDebounce from '../../component/hooks/useDebounce';
+import ReactPaginate from 'react-paginate';
 
 const AllFoods = () => {
     const [searchValue, setSearchValue] = useState('');
+    const [pageNumber, setPageNumber] = useState(0); //mặc định số trang là 0
+
     const focusRef = useRef();
+    const debounce = useDebounce(searchValue, 500);
+
+    // Paginnate
+    const productPerPage = 8; //tổng số span trong 1 trang
+    // trang đã truy cập = số trang * tổng số spham trong 1 trang
+    const visitedPage = pageNumber * productPerPage;
+    // Tìm kím sản phẩm input Value
+    const searchProduct = products.filter((item) => {
+        // nếu input ko có thì return ra tất cả
+        if (debounce.value === '') return item;
+
+        // (product.title. thành chữ thường) nối với (dữ liệu input chữ thường )
+        if (item.title.toLowerCase().includes(debounce.toLowerCase())) return item;
+    });
+    // cấu hình trang = API dữ liệu .slice cắt ra(trang đã truy cập, trang đã truy cập + tổng số spham trong 1 trang)
+    // truyền displayPage để lọc span và MAP vì trong display đã có API searchProduct để cắt số trang
+    const displayPage = searchProduct.slice(visitedPage, visitedPage + productPerPage);
+
+    // đếm số trang = làm tròn(API.length chia tới tổng số spham trong 1 trang)
+    const pageCount = Math.ceil(searchProduct.length / productPerPage);
+
+    // sự thay đổi trong từng page truyền (trang đã chọn selected)
+    const changedPages = ({ selected }) => {
+        setPageNumber(selected);
+    };
 
     // HandleChange
     const HandleChange = (e) => {
@@ -74,11 +103,22 @@ const AllFoods = () => {
                     </Row>
 
                     <Row>
-                        {products.map((item, index) => (
+                        {displayPage.map((item, index) => (
                             <Col key={index} lg={3} md={4} sm={6} xs={6} className="mb-4">
                                 <ProductCard item={item} />
                             </Col>
                         ))}
+
+                        {/* PAGINATE */}
+                        <div>
+                            <ReactPaginate
+                                pageCount={pageCount}
+                                onPageChange={changedPages}
+                                previousLabel="Prev"
+                                nextLabel="Next"
+                                containerClassName="paginate-btns"
+                            />
+                        </div>
                     </Row>
                 </Container>
             </section>

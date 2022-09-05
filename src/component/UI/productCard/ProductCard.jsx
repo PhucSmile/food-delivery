@@ -28,11 +28,11 @@ const ProductCard = ({ item }) => {
 
             <div className="product__content">
                 <h5>
-                    <Link to={`/products/${item.id}`}>{item.title}</Link>
+                    <Link to={`/foods/${item.id}`}>{item.title}</Link>
                 </h5>
                 <div className="d-flex align-items-center justify-content-between">
                     <span className="product__price">${item.price}</span>
-                    <button className="addToCart__btn" onClick={HandleAddToCart}>
+                    <button className="addToCart__btns" onClick={HandleAddToCart}>
                         Add to Cart
                     </button>
                 </div>
