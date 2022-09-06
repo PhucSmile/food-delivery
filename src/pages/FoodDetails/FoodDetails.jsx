@@ -4,19 +4,59 @@ import { useParams } from 'react-router-dom';
 import products from '../../assets/fake-data/products';
 import SectionFoods from '../../component/UI/sectionFoods/SectionFoods';
 import Helmet from '../../component/Helmet/Helmet';
+import ProductCard from '../../component/UI/productCard/ProductCard';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { cartActions } from '../../store/reducer';
 
 const FoodDetails = () => {
     const [tab, setTab] = useState('desc'); //lấy value mặc định để active
+    const [nameValue, setNameValue] = useState('');
+    const [emailValue, setEmailValue] = useState('');
+    const [contentValue, setContentValue] = useState('');
+    const dispatch = useDispatch();
 
     // hàm xử lý lấy dữ liệu id: so sánh
     const { id } = useParams(); // lấy đc ib page khác khi ng dùng click vào và truyền id click qua đây
     const product = products.find((item) => item.id === id); //tìm 1 thằng trùng duy nhất từ id của useParams(param này chọc qua lên kia lấy)
     const [previewImg, setPreviewImg] = useState(product.image01); //xong r render ra img lớn - còn img nhỏ khi mà onClick nó SET lại product.image
+    // tìm những sản phẩm có liên quan đến products.category === product.category render ra và slice cắt lấy 4 hình
+    const relatedProduct = products.filter((item) => item.category === product.category);
+    const sliceRelatedProduct = relatedProduct.slice(0, 4);
+
+    // khi nhấp vào sản phẩm related nó hiển thị lại previewImg
+    useEffect(() => {
+        setPreviewImg(product.image01);
+    }, [product]);
+
+    // khi nhấp vào sản phẩm related nó scroll lên top
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [product]);
+
+    // Handle
+    const HandleAddToCart = () => {
+        dispatch(
+            cartActions.addToCart({
+                id: product.id,
+                title: product.title,
+                image01: product.image01,
+                price: product.price,
+            }),
+        );
+    };
+
+    const HandleSubmit = (e) => {
+        e.preventDefault();
+        setNameValue('');
+        setEmailValue('');
+        setContentValue('');
+        alert('Success');
+    };
 
     return (
         <Helmet title="Food-Details">
@@ -53,7 +93,9 @@ const FoodDetails = () => {
                                 <p className="product__category mb-5">
                                     Category: <span>{product.category}</span>
                                 </p>
-                                <button className="addToCart__btn">Add to cart</button>
+                                <button className="addToCart__btn" onClick={HandleAddToCart}>
+                                    Add to cart
+                                </button>
                             </div>
                         </Col>
 
@@ -72,22 +114,41 @@ const FoodDetails = () => {
                                     <p>{product.desc}</p>
                                 </div>
                             ) : (
-                                <div className="tabs__form mt-4">
+                                <div className="tabs__form my-5">
                                     <div className="review">
                                         <p className="user__name mb-0">Thành Phúc</p>
                                         <p className="user__email">email: mrphuc48@gmail.com</p>
                                         <p className="feedback__text">great product</p>
                                     </div>
 
-                                    <form className="form__submit">
+                                    <form className="form__submit" onSubmit={HandleSubmit}>
                                         <div className="form__group">
-                                            <input type="text" placeholder="Enter your name" required />
+                                            <input
+                                                type="text"
+                                                placeholder="Enter your name"
+                                                required
+                                                value={nameValue}
+                                                onChange={(e) => setNameValue(e.target.value)}
+                                            />
                                         </div>
                                         <div className="form__group">
-                                            <input type="text" placeholder="Enter your name" required />
+                                            <input
+                                                type="email"
+                                                placeholder="Enter your email"
+                                                required
+                                                value={emailValue}
+                                                onChange={(e) => setEmailValue(e.target.value)}
+                                            />
                                         </div>
                                         <div className="form__group">
-                                            <textarea type="text" placeholder="Enter your name" rows={5} required />
+                                            <textarea
+                                                type="text"
+                                                placeholder="Enter your content"
+                                                rows={5}
+                                                required
+                                                value={contentValue}
+                                                onChange={(e) => setContentValue(e.target.value)}
+                                            />
                                         </div>
                                         <button type="submit" className="addToCart__btn">
                                             Submit
@@ -96,6 +157,17 @@ const FoodDetails = () => {
                                 </div>
                             )}
                         </Col>
+
+                        {/* Related-Product */}
+                        <Col lg={12} className="mb-3">
+                            <h2 className="related__product-title">You might also like</h2>
+                        </Col>
+
+                        {sliceRelatedProduct.map((item, index) => (
+                            <Col key={index} lg={3} md={4} sm={6} xs={6} className="mt-4">
+                                <ProductCard item={item} />
+                            </Col>
+                        ))}
                     </Row>
                 </Container>
             </section>

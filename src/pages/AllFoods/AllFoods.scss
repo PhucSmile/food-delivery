@@ -73,3 +73,29 @@
         }
     }
 }
+
+@media only screen and (max-width: 992px) {
+    .sorting__widgets.w-50.float-end {
+        width: 70% !important;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .sorting__widgets.w-50.float-end {
+        width: 100% !important;
+        margin-top: 20px;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .paginate-btns {
+        padding-left: 0;
+        li {
+            a {
+                padding: 5px 10px;
+                font-size: 0.8rem;
+                margin: 5px;
+            }
+        }
+    }
+}

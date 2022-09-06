@@ -69,7 +69,7 @@ const AllFoods = () => {
             <section>
                 <Container>
                     <Row className="mb-5">
-                        <Col lg={6} md={6} sm={6} xs={12}>
+                        <Col lg={6} md={6} sm={12} xs={12}>
                             <div className="AllFoods__search d-flex align-items-center justify-content-between w-100 ">
                                 <div className="d-flex justify-content-between align-items-center">
                                     <input
@@ -89,7 +89,7 @@ const AllFoods = () => {
                                 </span>
                             </div>
                         </Col>
-                        <Col lg={6} md={6} sm={6} xs={12}>
+                        <Col lg={6} md={6} sm={12} xs={12}>
                             <div className="sorting__widgets w-50 float-end">
                                 <Form.Select>
                                     <option>Default</option>
@@ -104,7 +104,7 @@ const AllFoods = () => {
 
                     <Row>
                         {displayPage.map((item, index) => (
-                            <Col key={index} lg={3} md={4} sm={6} xs={6} className="mb-4">
+                            <Col key={index} lg={3} md={4} sm={6} xs={12} className="mb-4">
                                 <ProductCard item={item} />
                             </Col>
                         ))}
