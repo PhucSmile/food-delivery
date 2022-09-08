@@ -13,11 +13,22 @@ import Table from 'react-bootstrap/Table';
 import ProductionQuantityLimitsOutlinedIcon from '@mui/icons-material/ProductionQuantityLimitsOutlined';
 
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
     const productCart = useSelector((state) => state.cart.cartItems);
     const subTotalCart = useSelector((state) => state.cart.totalAmount);
-    console.log(productCart);
+
+    const user = useSelector((state) => state.user.user);
+    const navigate = useNavigate();
+
+    const HandleCheckout = () => {
+        if (!user?.email) {
+            alert('Please log in  to checkout');
+        } else {
+            navigate('/checkout');
+        }
+    };
     return (
         <Helmet title="your-cart">
             <SectionFoods title="Your Cart" />
@@ -58,8 +69,8 @@ const Cart = () => {
                                     <button className="addToCart__btn">
                                         <Link to="/foods">Continue shopping</Link>
                                     </button>
-                                    <button className="addToCart__btn">
-                                        <Link to="/checkout">Proceed to checkout</Link>
+                                    <button className="addToCart__btn" onClick={HandleCheckout}>
+                                        Proceed to checkout
                                     </button>
                                 </div>
                             </div>

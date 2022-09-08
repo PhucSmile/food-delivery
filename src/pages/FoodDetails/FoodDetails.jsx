@@ -18,6 +18,7 @@ const FoodDetails = () => {
     const [nameValue, setNameValue] = useState('');
     const [emailValue, setEmailValue] = useState('');
     const [contentValue, setContentValue] = useState('');
+    const userFeedback = [];
     const dispatch = useDispatch();
 
     // hàm xử lý lấy dữ liệu id: so sánh
@@ -55,7 +56,15 @@ const FoodDetails = () => {
         setNameValue('');
         setEmailValue('');
         setContentValue('');
-        alert('Success');
+
+        const feedback = {
+            name: nameValue,
+            email: emailValue,
+            content: contentValue,
+        };
+        userFeedback.push(feedback);
+        console.log(userFeedback);
+        alert('success Thanks you');
     };
 
     return (

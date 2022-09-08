@@ -76,6 +76,9 @@ html *::-webkit-scrollbar-track {
     color: var(--white);
     border-radius: 5px;
 }
+.addToCart__btn a {
+    color: var(--white);
+}
 .addToCart__btn:hover {
     background-color: var(--hover-active);
 }

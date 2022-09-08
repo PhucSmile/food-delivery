@@ -2,7 +2,6 @@ import React from 'react';
 import './Carts.scss';
 import CartItem from './cartItem/CartItem';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { Link } from 'react-router-dom';
 
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
@@ -11,15 +10,27 @@ import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDiss
 import { useSelector, useDispatch } from 'react-redux';
 import { cartActions } from '../../../store/reducer';
 
+import { useNavigate } from 'react-router-dom';
+
 const Carts = () => {
     const dispatch = useDispatch();
     const renderCart = useSelector((state) => state.cart.cartItems);
     const totalQuantity = useSelector((state) => state.cart.totalQuantity);
     const TotalAmount = useSelector((state) => state.cart.totalAmount);
+    const user = useSelector((state) => state.user.user);
+    const navigate = useNavigate();
 
     // hiden cart ui
     const HandleShowCartUi = () => {
         dispatch(cartActions.toggleCart());
+    };
+
+    const HandleCheckout = () => {
+        if (!user?.email) {
+            alert('Please log in  to checkout');
+        } else {
+            navigate('/checkout');
+        }
     };
 
     return (
@@ -53,8 +64,8 @@ const Carts = () => {
                         </h6>
                     </div>
 
-                    <button className="cart__amount-checkout">
-                        <Link to="/checkout">Check out</Link>
+                    <button className="cart__amount-checkout" onClick={HandleCheckout}>
+                        Check out
                     </button>
                 </div>
             </ListGroup>

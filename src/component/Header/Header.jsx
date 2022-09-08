@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import './Header.scss';
 import Container from 'react-bootstrap/Container';
 import logo from '../../assets/images/res-logo.png';
@@ -6,10 +6,16 @@ import { NavLink, Link } from 'react-router-dom';
 
 import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
+import Tippy from '@tippyjs/react/headless';
 
+import { auth } from '../../Firebase';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { cartActions } from '../../store/reducer';
+import { userActions } from '../../store/userSlice';
 
 const nav__links = [
     {
@@ -31,9 +37,13 @@ const nav__links = [
 ];
 
 const Header = () => {
+    const user = useSelector((state) => state.user.user);
+    console.log(user);
+
     const [scroll, setScroll] = useState(false);
     const showMenuRef = useRef();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     // Show cart ui
     const HandleShowCartUi = () => {
@@ -50,6 +60,33 @@ const Header = () => {
         setScroll(window.scrollY > 80 ? true : false);
         return () => window.onscroll(null);
     };
+
+    const HandleLogOut = async () => {
+        try {
+            await signOut(auth);
+            navigate('/login');
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        const unSubscribed = onAuthStateChanged(auth, (currentUser) => {
+            if (currentUser) {
+                dispatch(
+                    userActions.login({
+                        email: currentUser.email,
+                    }),
+                );
+            } else {
+                dispatch(userActions.logout());
+            }
+        });
+
+        return () => {
+            unSubscribed();
+        };
+    }, [dispatch]);
 
     return (
         <header className={`Header ${scroll ? 'Header__shrink' : ''} `}>
@@ -81,13 +118,41 @@ const Header = () => {
                     <div className="nav__right d-flex align-items-center gap-4">
                         <span className="cart__icon">
                             <ShoppingBasketOutlinedIcon className="icon" onClick={HandleShowCartUi} />
+
                             {totalQuantity >= 1 ? <span className="cart__badge">{totalQuantity}</span> : null}
                         </span>
 
                         <span className="user">
-                            <Link to="/login">
-                                <PersonOutlineIcon className="icon" />
-                            </Link>
+                            <Tippy
+                                inertia
+                                interactive
+                                delay={[0, 700]}
+                                placement="bottom"
+                                render={(attrs) => (
+                                    <div className="user__list" tabIndex="-1" {...attrs}>
+                                        <div className="user__items d-flex flex-column ">
+                                            {user?.email ? (
+                                                <span onClick={HandleLogOut}>Logout</span>
+                                            ) : (
+                                                <>
+                                                    <span>
+                                                        <Link to="/login">Login</Link>
+                                                    </span>
+                                                    <span>
+                                                        <Link to="/register">Register</Link>
+                                                    </span>
+                                                </>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+                            >
+                                {user?.email ? (
+                                    <PersonOutlineIcon className="icon" />
+                                ) : (
+                                    <PersonOffOutlinedIcon className="icon" />
+                                )}
+                            </Tippy>
                         </span>
 
                         {/* Mobile Menu */}

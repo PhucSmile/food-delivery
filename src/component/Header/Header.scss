@@ -68,6 +68,26 @@
             }
         }
 
+        .user__list {
+            background-color: #fde4e4;
+            border-radius: 5px;
+            text-align: center;
+
+            span {
+                line-height: 30px;
+                padding: 5px 16px;
+                cursor: pointer;
+                font-size: 0.9rem;
+
+                a {
+                    color: var(--text-color);
+                }
+                &:hover {
+                    background-color: rgba(22, 24, 35, 0.03);
+                }
+            }
+        }
+
         .mobile__menu {
             font-weight: 600;
             display: none;
