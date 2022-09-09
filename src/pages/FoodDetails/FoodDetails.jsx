@@ -14,27 +14,25 @@ import { useDispatch } from 'react-redux';
 import { cartActions } from '../../store/reducer';
 
 const FoodDetails = () => {
-    const [tab, setTab] = useState('desc'); //lấy value mặc định để active
+    const [tab, setTab] = useState('desc');
     const [nameValue, setNameValue] = useState('');
     const [emailValue, setEmailValue] = useState('');
     const [contentValue, setContentValue] = useState('');
     const userFeedback = [];
     const dispatch = useDispatch();
 
-    // hàm xử lý lấy dữ liệu id: so sánh
-    const { id } = useParams(); // lấy đc ib page khác khi ng dùng click vào và truyền id click qua đây
-    const product = products.find((item) => item.id === id); //tìm 1 thằng trùng duy nhất từ id của useParams(param này chọc qua lên kia lấy)
-    const [previewImg, setPreviewImg] = useState(product.image01); //xong r render ra img lớn - còn img nhỏ khi mà onClick nó SET lại product.image
-    // tìm những sản phẩm có liên quan đến products.category === product.category render ra và slice cắt lấy 4 hình
+    const { id } = useParams();
+    const product = products.find((item) => item.id === id);
+    const [previewImg, setPreviewImg] = useState(product.image01);
+
+    // filter related with product and slice
     const relatedProduct = products.filter((item) => item.category === product.category);
     const sliceRelatedProduct = relatedProduct.slice(0, 4);
 
-    // khi nhấp vào sản phẩm related nó hiển thị lại previewImg
     useEffect(() => {
         setPreviewImg(product.image01);
     }, [product]);
 
-    // khi nhấp vào sản phẩm related nó scroll lên top
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [product]);

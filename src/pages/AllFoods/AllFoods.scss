@@ -37,6 +37,8 @@
 }
 
 .sorting__widgets {
+    width: 50%;
+    float: right;
     .form-select {
         border: 1px solid #fde4e4;
         padding: 7px 15px;
@@ -74,15 +76,10 @@
     }
 }
 
-@media only screen and (max-width: 992px) {
-    .sorting__widgets.w-50.float-end {
-        width: 70% !important;
-    }
-}
-
 @media only screen and (max-width: 768px) {
-    .sorting__widgets.w-50.float-end {
-        width: 100% !important;
+    .sorting__widgets {
+        width: 100%;
+        float: none;
         margin-top: 20px;
     }
 }

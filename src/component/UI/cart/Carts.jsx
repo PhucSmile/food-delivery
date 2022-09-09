@@ -19,7 +19,7 @@ const Carts = () => {
     const user = useSelector((state) => state.user.user);
     const navigate = useNavigate();
 
-    // hiden cart ui
+    // hidden cart ui
     const HandleShowCartUi = () => {
         dispatch(cartActions.toggleCart());
     };

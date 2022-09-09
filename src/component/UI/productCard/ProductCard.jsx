@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import './ProductCard.scss';
 import { Link } from 'react-router-dom';
 
@@ -11,7 +13,6 @@ const ProductCard = ({ item }) => {
     const HandleAddToCart = () => {
         dispatch(
             cartActions.addToCart({
-                //lấy giá trị props item ra
                 id: item.id,
                 title: item.title,
                 image01: item.image01,
@@ -33,12 +34,16 @@ const ProductCard = ({ item }) => {
                 <div className="d-flex align-items-center justify-content-between">
                     <span className="product__price">${item.price}</span>
                     <button className="addToCart__btns" onClick={HandleAddToCart}>
-                        Add to Cart
+                        Add Cart
                     </button>
                 </div>
             </div>
         </div>
     );
+};
+
+ProductCard.propTypes = {
+    items: PropTypes.object,
 };
 
 export default ProductCard;

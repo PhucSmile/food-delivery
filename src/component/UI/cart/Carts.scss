@@ -10,7 +10,7 @@
         position: absolute;
         top: 0;
         right: 0;
-        width: 400px;
+        max-width: 400px;
         height: 100%;
         background-color: var(--white);
         z-index: 9999;
@@ -81,6 +81,31 @@
                     background-color: var(--hover-active);
                     a {
                         color: var(--white);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .cart__container {
+        .cart__list {
+            .cart__list-items {
+                .cart__list-noCart {
+                    .icon {
+                        font-size: 2rem !important;
+                    }
+                }
+            }
+
+            .cart__amount {
+                .cart__amount-subtotal {
+                    h6 {
+                        font-size: 0.8rem;
+                        span {
+                            font-size: 1rem;
+                        }
                     }
                 }
             }

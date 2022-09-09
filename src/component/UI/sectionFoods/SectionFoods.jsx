@@ -1,5 +1,6 @@
 import React from 'react';
 import './SectionFoods.scss';
+import PropTypes from 'prop-types';
 
 import Container from 'react-bootstrap/Container';
 
@@ -11,6 +12,10 @@ const SectionFoods = ({ title }) => {
             </Container>
         </section>
     );
+};
+
+SectionFoods.propTypes = {
+    title: PropTypes.string.isRequired,
 };
 
 export default SectionFoods;

@@ -17,7 +17,6 @@ import useDebounce from '../../component/hooks/useDebounce';
 import ReactPaginate from 'react-paginate';
 
 const AllFoods = () => {
-    // filter price
     const [select, setSelect] = useState('');
     const [allProducts, setAllProducts] = useState(products);
 
@@ -27,7 +26,7 @@ const AllFoods = () => {
     const focusRef = useRef();
     const debounce = useDebounce(searchValue, 500);
 
-    // lấy ra value của seclect oncHange và check price
+    // filter price
     useEffect(() => {
         if (select === 'default') {
             setAllProducts(products);
@@ -43,16 +42,14 @@ const AllFoods = () => {
     }, [select]);
 
     // Paginnate
-    const productPerPage = 8; //tổng số span trong 1 trang
-    // trang đã truy cập = số trang * tổng số spham trong 1 trang
+    const productPerPage = 8;
     const visitedPage = pageNumber * productPerPage;
-    // Tìm kím sản phẩm input Value
+
+    // filter value input
     const searchProduct = allProducts.filter((item) => {
-        // nếu input ko có thì return ra tất cả
         if (debounce.value === '') {
             return item;
         }
-        // (product.title. thành chữ thường) nối với (dữ liệu input chữ thường )
         if (item.title.toLowerCase().includes(debounce.toLowerCase())) {
             return item;
         } else {
@@ -60,19 +57,14 @@ const AllFoods = () => {
         }
     });
 
-    // cấu hình trang = API dữ liệu .slice cắt ra(trang đã truy cập, trang đã truy cập + tổng số spham trong 1 trang)
-    // truyền displayPage để lọc span và MAP vì trong display đã có API searchProduct để cắt số trang
     const displayPage = searchProduct.slice(visitedPage, visitedPage + productPerPage);
-
-    // đếm số trang = làm tròn(API.length chia tới tổng số spham trong 1 trang)
     const pageCount = Math.ceil(searchProduct.length / productPerPage);
 
-    // sự thay đổi trong từng page truyền (trang đã chọn selected)
     const changedPages = ({ selected }) => {
         setPageNumber(selected);
     };
 
-    // HandleChange
+    // Handle
     const HandleChange = (e) => {
         const searchValue = e.target.value;
         if (!searchValue.startsWith(' ')) {
@@ -115,7 +107,7 @@ const AllFoods = () => {
                             </div>
                         </Col>
                         <Col lg={6} md={6} sm={12} xs={12}>
-                            <div className="sorting__widgets w-50 float-end">
+                            <div className="sorting__widgets">
                                 <Form.Select value={select} onChange={(e) => setSelect(e.target.value)}>
                                     <option value="default">Default</option>
                                     <option value="hight-price">Hight-Price</option>

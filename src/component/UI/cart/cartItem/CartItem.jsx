@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import './CartItem.scss';
 
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -59,6 +61,10 @@ const CartItem = ({ item }) => {
             </div>
         </div>
     );
+};
+
+CartItem.propTypes = {
+    items: PropTypes.object,
 };
 
 export default CartItem;

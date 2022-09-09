@@ -18,11 +18,10 @@ export const cartSlice = createSlice({
 
         // ++++ADD CART++++
         addToCart(state, action) {
-            //  newItems gồm [ id , products, quantity]
             const newItems = action.payload;
             const existingItem = state.cartItems.find((item) => item.id === newItems.id);
             state.totalQuantity++;
-            // ktra mặt hàng này có chưa
+
             if (!existingItem) {
                 // add to cart
                 state.cartItems.push({
@@ -35,15 +34,11 @@ export const cartSlice = createSlice({
                 });
             } else {
                 // increase quantity
-                // nếu có rồi thì quantity tăng 1
                 existingItem.quantity++;
 
-                // cập nhập lại giá
-                // tổng giá + giá newItems mới
                 existingItem.totalPrice = Number(existingItem.totalPrice) + Number(newItems.price);
             }
 
-            // tính tổng tất cả spham
             state.totalAmount = state.cartItems.reduce(
                 (total, item) => total + Number(item.price) * Number(item.quantity),
                 0,
@@ -60,16 +55,13 @@ export const cartSlice = createSlice({
             const existingItem = state.cartItems.find((item) => item.id === id);
             state.totalQuantity--;
 
-            // ktra quantity nếu sl trong giỏ hàng ===1 thì xóa else số lượng hiện tại - đi số lượng newItems.quantity mới
             if (existingItem.quantity === 1) {
                 state.cartItems = state.cartItems.filter((item) => item.id !== id);
             } else {
                 existingItem.quantity--;
-                // tính lại giá :tổng giá trừ đi giá mới
                 existingItem.totalPrice = Number(existingItem.totalPrice) - Number(existingItem.price);
             }
 
-            // tính tổng tất cả spham
             state.totalAmount = state.cartItems.reduce(
                 (total, item) => total + Number(item.price) * Number(item.quantity),
                 0,
@@ -86,14 +78,10 @@ export const cartSlice = createSlice({
             const existingItem = state.cartItems.find((item) => item.id === id);
 
             if (existingItem) {
-                //tìm những tk khác với id và lọc chúng và trả ra mảng mới
                 state.cartItems = state.cartItems.filter((item) => item.id !== id);
-
-                // khi xóa thì cập nhập lại totalQuantity
                 state.totalQuantity = state.totalQuantity - existingItem.quantity;
             }
 
-            // tính tổng tất cả spham
             state.totalAmount = state.cartItems.reduce(
                 (total, item) => total + Number(item.price) * Number(item.quantity),
                 0,

@@ -100,10 +100,12 @@ const Home = () => {
                                     autem, sint veritatis!
                                 </p>
                                 <div className="hero__btns d-flex align-items-center gap-5 mt-4">
-                                    <button className="order__btn d-flex align-items-center justify-content-between">
-                                        Order now
-                                        <KeyboardArrowRightIcon />
-                                    </button>
+                                    <Link to="/foods">
+                                        <button className="order__btn d-flex align-items-center justify-content-between">
+                                            Order now
+                                            <KeyboardArrowRightIcon />
+                                        </button>
+                                    </Link>
                                     <button className="all__foods-btn">
                                         <Link to="/foods">See all foods</Link>
                                     </button>
@@ -177,7 +179,7 @@ const Home = () => {
                         </Col>
 
                         <Col lg={12}>
-                            <div className="food__category d-flex align-items-center justify-content-center gap-4">
+                            <div className="food__category d-flex align-items-center justify-content-center gap-4 mb-5">
                                 <button
                                     className={`all__btn ${category === 'ALL' ? 'foodBtn__Active' : ' '}`}
                                     onClick={() => setCategory('ALL')}
@@ -218,7 +220,7 @@ const Home = () => {
                         </Col>
 
                         {allProducts.map((item, index) => (
-                            <Col key={index} lg={3} md={4} sm={6} xs={6} className="mt-5">
+                            <Col key={index} lg={3} md={4} sm={6} xs={6} className="mb-4">
                                 <ProductCard item={item} />
                             </Col>
                         ))}
@@ -291,7 +293,7 @@ const Home = () => {
                         </Col>
 
                         {hotPizza.map((item, index) => (
-                            <Col key={index} lg={3} md={4} sm={6}>
+                            <Col key={index} lg={3} md={4} sm={6} className="mb-4">
                                 <ProductCard item={item} />
                             </Col>
                         ))}
@@ -317,7 +319,7 @@ const Home = () => {
                             </div>
                         </Col>
                         <Col lg={6} md={6}>
-                            <img src={testimonialImg} alt="Testimonial-img" className="w-100" />
+                            <img src={testimonialImg} alt="Testimonial-img" className="testimonial__img w-100" />
                         </Col>
                     </Row>
                 </Container>

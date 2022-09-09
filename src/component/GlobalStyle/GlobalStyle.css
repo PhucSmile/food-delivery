@@ -12,8 +12,8 @@
     padding: 0;
     box-sizing: border-box;
 }
-
-html {
+.main {
+    overflow: hidden;
 }
 
 body {
@@ -54,7 +54,7 @@ html body {
 
 html *::-webkit-scrollbar {
     border-radius: 0;
-    width: 8px;
+    width: 2px;
 }
 
 html *::-webkit-scrollbar-thumb {

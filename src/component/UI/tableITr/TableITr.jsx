@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import './TableTr.scss';
 import { useDispatch } from 'react-redux';
 
@@ -27,6 +29,10 @@ const TableTr = ({ item }) => {
             </tr>
         </>
     );
+};
+
+TableTr.propTypes = {
+    items: PropTypes.object,
 };
 
 export default TableTr;
