@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './AllFoods.scss';
 import Helmet from '../../component/Helmet/Helmet';
 import SectionFoods from '../../component/UI/sectionFoods/SectionFoods';
@@ -17,24 +17,49 @@ import useDebounce from '../../component/hooks/useDebounce';
 import ReactPaginate from 'react-paginate';
 
 const AllFoods = () => {
+    // filter price
+    const [select, setSelect] = useState('');
+    const [allProducts, setAllProducts] = useState(products);
+
     const [searchValue, setSearchValue] = useState('');
-    const [pageNumber, setPageNumber] = useState(0); //mặc định số trang là 0
+    const [pageNumber, setPageNumber] = useState(0);
 
     const focusRef = useRef();
     const debounce = useDebounce(searchValue, 500);
+
+    // lấy ra value của seclect oncHange và check price
+    useEffect(() => {
+        if (select === 'default') {
+            setAllProducts(products);
+        }
+        if (select === 'hight-price') {
+            const filterPriceHight = products.filter((item) => item.price >= 50);
+            setAllProducts(filterPriceHight);
+        }
+        if (select === 'low-price') {
+            const filterPriceLow = products.filter((item) => item.price <= 50);
+            setAllProducts(filterPriceLow);
+        }
+    }, [select]);
 
     // Paginnate
     const productPerPage = 8; //tổng số span trong 1 trang
     // trang đã truy cập = số trang * tổng số spham trong 1 trang
     const visitedPage = pageNumber * productPerPage;
     // Tìm kím sản phẩm input Value
-    const searchProduct = products.filter((item) => {
+    const searchProduct = allProducts.filter((item) => {
         // nếu input ko có thì return ra tất cả
-        if (debounce.value === '') return item;
-
+        if (debounce.value === '') {
+            return item;
+        }
         // (product.title. thành chữ thường) nối với (dữ liệu input chữ thường )
-        if (item.title.toLowerCase().includes(debounce.toLowerCase())) return item;
+        if (item.title.toLowerCase().includes(debounce.toLowerCase())) {
+            return item;
+        } else {
+            return console.log('not find');
+        }
     });
+
     // cấu hình trang = API dữ liệu .slice cắt ra(trang đã truy cập, trang đã truy cập + tổng số spham trong 1 trang)
     // truyền displayPage để lọc span và MAP vì trong display đã có API searchProduct để cắt số trang
     const displayPage = searchProduct.slice(visitedPage, visitedPage + productPerPage);
@@ -91,10 +116,8 @@ const AllFoods = () => {
                         </Col>
                         <Col lg={6} md={6} sm={12} xs={12}>
                             <div className="sorting__widgets w-50 float-end">
-                                <Form.Select>
-                                    <option>Default</option>
-                                    <option value="ascending">Alphabetically, A-Z</option>
-                                    <option value="descending">Alphabetically, Z-A</option>
+                                <Form.Select value={select} onChange={(e) => setSelect(e.target.value)}>
+                                    <option value="default">Default</option>
                                     <option value="hight-price">Hight-Price</option>
                                     <option value="low-price">Low-Price</option>
                                 </Form.Select>

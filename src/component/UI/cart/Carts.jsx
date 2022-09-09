@@ -9,7 +9,6 @@ import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDiss
 
 import { useSelector, useDispatch } from 'react-redux';
 import { cartActions } from '../../../store/reducer';
-
 import { useNavigate } from 'react-router-dom';
 
 const Carts = () => {
@@ -30,6 +29,7 @@ const Carts = () => {
             alert('Please log in  to checkout');
         } else {
             navigate('/checkout');
+            dispatch(cartActions.toggleCart());
         }
     };
 

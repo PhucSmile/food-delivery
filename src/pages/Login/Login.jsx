@@ -62,7 +62,7 @@ const Login = () => {
                                 <p className="account__text">
                                     Already have an account? <Link to="/register">Create an account.</Link>
                                 </p>
-                                <button type="submit" className="addToCart__btn ">
+                                <button type="submit" className="addToCart__btn w-50 ">
                                     Login
                                 </button>
                             </Form>

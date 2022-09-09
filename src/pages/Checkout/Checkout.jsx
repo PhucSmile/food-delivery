@@ -20,8 +20,9 @@ const Checkout = () => {
     const shippingInfo = [];
 
     const subTotal = useSelector((state) => state.cart.totalAmount);
-    const shipping = 5;
-    const Total = subTotal + Number(shipping);
+    const shipping = 10;
+
+    const TotalAmount = subTotal + Number(shipping);
 
     const HandleSubmit = (e) => {
         e.preventDefault();
@@ -125,7 +126,7 @@ const Checkout = () => {
 
                                 <div className="checkout__total">
                                     <h5 className="d-flex align-items-center justify-content-between">
-                                        Total: <span>${Total}</span>
+                                        Total: <span>${TotalAmount}</span>
                                     </h5>
                                 </div>
                             </div>

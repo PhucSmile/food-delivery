@@ -38,7 +38,6 @@ const nav__links = [
 
 const Header = () => {
     const user = useSelector((state) => state.user.user);
-    console.log(user);
 
     const [scroll, setScroll] = useState(false);
     const showMenuRef = useRef();

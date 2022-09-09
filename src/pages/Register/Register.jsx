@@ -61,9 +61,9 @@ const Register = () => {
                                 </Form.Group>
                                 {error ? <p className="error">{error}</p> : null}
                                 <p className="account__text">
-                                    You have account? <Link to="/login">Sign In now.</Link>
+                                    Already have an account? <Link to="/login">Login now.</Link>
                                 </p>
-                                <button type="submit" className="addToCart__btn ">
+                                <button type="submit" className="addToCart__btn w-50">
                                     Register
                                 </button>
                             </Form>
