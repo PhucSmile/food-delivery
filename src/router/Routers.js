@@ -22,7 +22,7 @@ const Routers = () => {
                 element={
                     <ProtectedRouter>
                         <Checkout />
-                    </ProtectedRouter>
+                    </ProtectedRouter>;
                 }
             />
             ;
