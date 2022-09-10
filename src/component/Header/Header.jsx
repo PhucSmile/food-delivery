@@ -1,38 +1,38 @@
-import React, { useRef, useState, useEffect } from "react";
-import "./Header.scss";
-import Container from "react-bootstrap/Container";
-import logo from "../../assets/images/res-logo.png";
-import { NavLink, Link } from "react-router-dom";
+import React, { useRef, useState, useEffect } from 'react';
+import './Header.scss';
+import Container from 'react-bootstrap/Container';
+import logo from '../../assets/images/res-logo.png';
+import { NavLink, Link } from 'react-router-dom';
 
-import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import PersonOffOutlinedIcon from "@mui/icons-material/PersonOffOutlined";
-import MenuIcon from "@mui/icons-material/Menu";
-import Tippy from "@tippyjs/react/headless";
+import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
+import MenuIcon from '@mui/icons-material/Menu';
+import Tippy from '@tippyjs/react/headless';
 
-import { auth } from "../../Firebase";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { cartActions } from "../../store/reducer";
-import { userActions } from "../../store/userSlice";
+import { auth } from '../../Firebase';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { cartActions } from '../../store/reducer';
+import { userActions } from '../../store/userSlice';
 
 const nav__links = [
   {
-    display: "Home",
-    path: "/home",
+    display: 'Home',
+    path: '/home',
   },
   {
-    display: "Foods",
-    path: "/foods",
+    display: 'Foods',
+    path: '/foods',
   },
   {
-    display: "Cart",
-    path: "/cart",
+    display: 'Cart',
+    path: '/cart',
   },
   {
-    display: "Contact",
-    path: "/contact",
+    display: 'Contact',
+    path: '/contact',
   },
 ];
 
@@ -52,7 +52,7 @@ const Header = () => {
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 
   const ToggleMenu = () => {
-    showMenuRef.current.classList.toggle("show__menu");
+    showMenuRef.current.classList.toggle('show__menu');
   };
 
   window.onscroll = () => {
@@ -63,7 +63,7 @@ const Header = () => {
   const HandleLogOut = async () => {
     try {
       await signOut(auth);
-      navigate("/login");
+      navigate('/login');
     } catch (error) {
       console.log(error);
     }
@@ -75,7 +75,7 @@ const Header = () => {
         dispatch(
           userActions.login({
             email: currentUser.email,
-          })
+          }),
         );
       } else {
         dispatch(userActions.logout());
@@ -88,7 +88,7 @@ const Header = () => {
   }, [dispatch]);
 
   return (
-    <header className={`Header ${scroll ? "Header__shrink" : ""} `}>
+    <header className={`Header ${scroll ? 'Header__shrink' : ''} `}>
       <Container>
         <div className="nav__wrapper d-flex align-items-center justify-center justify-content-between">
           <div className="logo text-center">
@@ -102,13 +102,7 @@ const Header = () => {
           <div className="navigation" ref={showMenuRef} onClick={ToggleMenu}>
             <div className="menu d-flex align-items-center gap-5">
               {nav__links.map((item, index) => (
-                <NavLink
-                  to={item.path}
-                  key={index}
-                  className={(navClass) =>
-                    navClass.isActive ? "active__menu" : ""
-                  }
-                >
+                <NavLink to={item.path} key={index} className={(navClass) => (navClass.isActive ? 'active__menu' : '')}>
                   {item.display}
                 </NavLink>
               ))}
@@ -118,14 +112,9 @@ const Header = () => {
           {/* nav right icons */}
           <div className="nav__right d-flex align-items-center gap-4">
             <span className="cart__icon">
-              <ShoppingBasketOutlinedIcon
-                className="icon"
-                onClick={HandleShowCartUi}
-              />
+              <ShoppingBasketOutlinedIcon className="icon" onClick={HandleShowCartUi} />
 
-              {totalQuantity >= 1 ? (
-                <span className="cart__badge">{totalQuantity}</span>
-              ) : null}
+              {totalQuantity >= 1 ? <span className="cart__badge">{totalQuantity}</span> : null}
             </span>
 
             <span className="user">
@@ -153,11 +142,7 @@ const Header = () => {
                   </div>
                 )}
               >
-                {user?.email ? (
-                  <PersonOutlineIcon className="icon" />
-                ) : (
-                  <PersonOffOutlinedIcon className="icon" />
-                )}
+                {user?.email ? <PersonOutlineIcon className="icon" /> : <PersonOffOutlinedIcon className="icon" />}
               </Tippy>
             </span>
 
