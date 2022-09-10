@@ -2,6 +2,7 @@
   "name": "food-delivery",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://PhucSmile.github.io/",
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
@@ -35,7 +36,7 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
-    "predeploy": "react-scripts build",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
