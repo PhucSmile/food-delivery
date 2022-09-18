@@ -12,7 +12,7 @@ import ProtectedRouter from '../component/hooks/ProtectedRouter';
 const Routers = () => {
   return (
     <Routes>
-      <Route path="/food-delivery" element={<Navigate to="/" />} />;
+      <Route path="/food-delivery/" element={<Navigate to="/" />} />;
       <Route path="/" element={<Home />} />
       <Route path="/foods" element={<AllFoods />} />;
       <Route path="/foods/:id" element={<FoodDetails />} />;
@@ -25,7 +25,6 @@ const Routers = () => {
           </ProtectedRouter>
         }
       />
-      ;
       <Route path="/login" element={<Login />} />;
       <Route path="/register" element={<Register />} />;
       <Route path="/contact" element={<Contact />} />;
