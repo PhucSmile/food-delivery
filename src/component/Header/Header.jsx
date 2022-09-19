@@ -20,7 +20,7 @@ import { userActions } from '../../store/userSlice';
 const nav__links = [
   {
     display: 'Home',
-    path: '/home',
+    path: '/',
   },
   {
     display: 'Foods',
@@ -92,7 +92,7 @@ const Header = () => {
       <Container>
         <div className="nav__wrapper d-flex align-items-center justify-center justify-content-between">
           <div className="logo text-center">
-            <Link to="/home">
+            <Link to="/">
               <img src={logo} alt="logo" />
               <h5>Tasty Treat</h5>
             </Link>
