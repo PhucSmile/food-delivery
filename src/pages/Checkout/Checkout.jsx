@@ -23,7 +23,7 @@ const Checkout = () => {
   const shipping = 10;
 
   const TotalAmount = subTotal + Number(shipping);
-
+//
   const HandleSubmit = (e) => {
     e.preventDefault();
     setName('');

@@ -57,6 +57,7 @@ const Header = () => {
 
   window.onscroll = () => {
     setScroll(window.scrollY > 80 ? true : false);
+    // clear up
     return () => window.onscroll(null);
   };
 

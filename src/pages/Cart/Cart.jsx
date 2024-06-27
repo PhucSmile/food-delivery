@@ -14,7 +14,7 @@ import ProductionQuantityLimitsOutlinedIcon from '@mui/icons-material/Production
 
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
+//
 const Cart = () => {
   const productCart = useSelector((state) => state.cart.cartItems);
   const subTotalCart = useSelector((state) => state.cart.totalAmount);
